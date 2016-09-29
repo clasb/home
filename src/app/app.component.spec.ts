@@ -17,9 +17,4 @@ describe('App', () => {
   	expect(fixture.componentInstance.test()).toBe('test');
   });
 
-  it ('should return test (using new)', () => {
-  	let component = new AppComponent();
-  	expect(component.test()).toBe('test');
-  });
-
 });

@@ -12,13 +12,26 @@ export class Geometry {
 
 export class Time {
 	validTime: Date;
-	parameters: Parameters;
+	parameters: Parameter;
 }
 
-export class Parameters {
+export class Parameter {
 	name: string;
 	levelType: string;
 	level: number;
 	unit: string;
 	values: number[];
+}
+
+export class Forecast {
+	snow: ForecastEntity[];
+	rain: ForecastEntity[];
+	temperature: ForecastEntity[];
+	wind: ForecastEntity[];
+}
+
+export class ForecastEntity {
+	unit: string;
+	value: number;
+	time: Date;
 }

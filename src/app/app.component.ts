@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import '../../public/css/styles.css';
-import { Weather } from './weatherService/weather';
+import { Weather, Forecast, Parameter } from './weatherService/weather';
 import { WeatherService } from './weatherservice/weather.service';
 import { Http, Response } from '@angular/http';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'home',
@@ -20,22 +21,31 @@ export class AppComponent implements OnInit {
 
 	ngOnInit() { this.getWeather(); this.getWeahterP(); }
 
-	getWeather() {
-		this.weatherService.getWeather()
-    		.subscribe(
-         		weather => {
-         			this.weather = weather;
-         			console.log(weather);
-         			console.log(this.weather);
-         		},
-           		error =>  this.errorMessage = <any>error);
-  	}
+	  getWeather() {
+		    this.weatherService.getWeather()
+    		    .subscribe(
+         		    weather => {
+         			      this.weather = weather;
+                    this.weatherToForecast(weather);
+                    console.log('observable ', this.weather);
+         		    }, error =>  this.errorMessage = <any>error );
+    }
+
+    weatherToForecast(weather: Weather): Forecast {
+        let forecast = new Forecast();
+        let parameters = new Parameter()[19];
+        _.each(weather.timeSeries, function(time) {
+            parameters.push(time.parameters);
+        });
+        console.log(parameters);
+        return forecast;
+    }
 
   	getWeahterP() {
   		this.weatherService.getWeatherP()
   		.then(weather => {
   			this.weatherp = weather;
-  			console.log(this.weatherp);
+        console.log('promise ', this.weatherp);
   		});
   	}
 
